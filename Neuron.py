@@ -4,7 +4,7 @@ __author__ = 'szymonidas'
 
 
 class Neuron:
-    __SMALL_POSITIVE_REAL_NUMBER = 0.1
+    __SMALL_POSITIVE_REAL_NUMBER = 0.0005
 
     def __init__(self):
         self.weights = list()
@@ -18,12 +18,6 @@ class Neuron:
     def apply_activation_function(self, activation_function):
         pass
 
-    def __compute_new_values_in_training_set(self):
-        modified_training_set = list()
-        for training_sample in self.training_set:
-            modified_training_set.append(self.__compute_new_training_sample(training_sample))
-        return modified_training_set
-
     def __get_corresponding_weight(self, training_sample):
         return self.weights.__getitem__(self.training_set.index(training_sample))
 
@@ -31,10 +25,11 @@ class Neuron:
         return training_sample * self.__get_corresponding_weight(training_sample)
 
     def compute_argument_value_for_activation_function(self):
-        new_training_set_values = self.__compute_new_values_in_training_set()
         activation_function_argument = 0
-        for value in new_training_set_values:
-            activation_function_argument += value
+        for training_sample_value in self.training_set:
+            new_value = training_sample_value * self.weights.__getitem__(self.training_set.index(training_sample_value))
+            print 'new value %s' % new_value
+            activation_function_argument += new_value
         return activation_function_argument
 
     def check_if_activate(self, argument):
@@ -42,15 +37,21 @@ class Neuron:
             return True
         return False
 
-    def __delta_principle_for_identity_function(self, weight, desired_result, obtained_result):
-        return weight + self.__SMALL_POSITIVE_REAL_NUMBER * (desired_result - obtained_result)
+    def __delta_principle_for_identity_function(self, weight, desired_result, obtained_result, used_training_sample_for_iteration):
+        result = weight + self.__SMALL_POSITIVE_REAL_NUMBER * (desired_result - obtained_result)*used_training_sample_for_iteration
+        print 'result for delta principle %s '%result
+        return result
 
     def apply_new_weights(self, desired_result, obtained_result):
-        for weight in self.training_set:
-            new_weight = self.__delta_principle_for_identity_function(weight, desired_result, obtained_result)
-            print new_weight
-            training_set_index = self.training_set.index(weight)
-            self.training_set.__setitem__(training_set_index, new_weight)
+        for weight in self.weights:
+            computed_index = self.weights.index(weight)
+            used_training_sample_for_iteration = self.training_set.__getitem__(computed_index)
+            print 'used training sample for iteration %s ' % used_training_sample_for_iteration
+            print 'index %s '% computed_index
+            new_weight = self.__delta_principle_for_identity_function(weight, desired_result, obtained_result, used_training_sample_for_iteration)
+            print 'new weight %s' % new_weight
+            self.weights.__setitem__(computed_index, new_weight)
+
 
 
 
