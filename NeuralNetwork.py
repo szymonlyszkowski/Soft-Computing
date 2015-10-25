@@ -7,7 +7,7 @@ __author__ = 'szymonidas'
 class NeuralNetwork:
     def __init__(self):
         self.training_set = [3, 2, 4]
-        self.initial_weights = [0.0001, 0.0002, 0.00003]
+        self.initial_weights = [1,1,1]
         self.neural_network_argument = None
 
     def train_neural_network(self):
@@ -24,3 +24,5 @@ class NeuralNetwork:
             self.neural_network_argument = neuron.compute_argument_value_for_activation_function()
 
         print "Neural network trained weights are: %s" % neuron.weights
+
+

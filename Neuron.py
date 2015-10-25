@@ -4,7 +4,7 @@ __author__ = 'szymonidas'
 
 
 class Neuron:
-    __SMALL_POSITIVE_REAL_NUMBER = 0.0005
+    __SMALL_POSITIVE_REAL_NUMBER = 0.05
 
     def __init__(self):
         self.weights = list()
