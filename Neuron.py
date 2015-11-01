@@ -1,8 +1,3 @@
-import ActivationFunction
-
-__author__ = 'szymonidas'
-
-
 class Neuron:
     __SMALL_POSITIVE_REAL_NUMBER = 0.05
 
@@ -18,19 +13,8 @@ class Neuron:
     def apply_activation_function(self, activation_function):
         pass
 
-    def __get_corresponding_weight(self, training_sample):
-        return self.weights.__getitem__(self.training_set.index(training_sample))
-
-    def __compute_new_training_sample(self, training_sample):
-        return training_sample * self.__get_corresponding_weight(training_sample)
-
     def compute_argument_value_for_activation_function(self):
-        activation_function_argument = 0
-        for training_sample_value in self.training_set:
-            new_value = training_sample_value * self.weights.__getitem__(self.training_set.index(training_sample_value))
-            print 'new value %s' % new_value
-            activation_function_argument += new_value
-        return activation_function_argument
+        return sum(training_value*self.weights[corresponding_index] for corresponding_index, training_value in enumerate(self.training_set))
 
     def check_if_activate(self, argument):
         if argument > 0:
@@ -43,14 +27,12 @@ class Neuron:
         return result
 
     def apply_new_weights(self, desired_result, obtained_result):
-        for weight in self.weights:
-            computed_index = self.weights.index(weight)
-            used_training_sample_for_iteration = self.training_set.__getitem__(computed_index)
-            print 'used training sample for iteration %s ' % used_training_sample_for_iteration
-            print 'index %s '% computed_index
+        for corresponding_index,weight in enumerate(self.weights):
+            used_training_sample_for_iteration = self.training_set.__getitem__(corresponding_index)
+            print 'used training sample %s for index %d' % (used_training_sample_for_iteration, corresponding_index)
+            print 'used weight %s' % weight
             new_weight = self.__delta_principle_for_identity_function(weight, desired_result, obtained_result, used_training_sample_for_iteration)
-            print 'new weight %s' % new_weight
-            self.weights.__setitem__(computed_index, new_weight)
+            self.weights.__setitem__(corresponding_index, new_weight)
 
 
 

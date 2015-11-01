@@ -1,6 +1,3 @@
-__author__ = 'szymonidas'
-
-
 class ActivationFunction:
     def __init__(self):
         pass
