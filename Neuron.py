@@ -1,5 +1,5 @@
 class Neuron:
-    __SMALL_POSITIVE_REAL_NUMBER = 0.05
+    __SMALL_POSITIVE_REAL_NUMBER = 0.005
 
     def __init__(self):
         self.weights = list()
@@ -9,6 +9,9 @@ class Neuron:
     def initialize_neuron(self, weights_list, training_samples_list):
         self.weights = weights_list
         self.training_set = training_samples_list
+
+    def apply_training_set(self, training_set):
+        self.training_set = training_set
 
     def apply_activation_function(self, activation_function):
         pass
