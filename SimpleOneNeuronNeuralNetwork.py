@@ -11,7 +11,7 @@ class SimpleOneNeuronNeuralNetwork:
 
     def train_neural_network(self, neuron, activation_function):
         neuron.initialize_neuron_weights(self.initial_weights)
-        for teaching_period in range(0, 100000):
+        for teaching_period in xrange(100000):
             self.run_teaching_period(neuron, activation_function, self.whole_training_set)
 
     def run_teaching_period(self, neuron, activation_function, whole_training_set):
