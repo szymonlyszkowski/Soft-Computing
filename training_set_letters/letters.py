@@ -23,3 +23,4 @@ class Letters:
                           [0, 1, 0, 0],
                           [1, 1, 1, 1]])
         return z_sample_array
+    # numpy.linalg.norm(z_sample_array) = uzysknie normy wektora w przypadku z = sqrt(10), potem kazdy element wektora dzielimy przez jego norme
