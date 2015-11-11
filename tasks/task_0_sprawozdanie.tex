@@ -1,0 +1,103 @@
+% vim:encoding=utf8 ft=tex sts=2 sw=2 et:
+
+\documentclass{classrep}
+\usepackage[utf8x]{inputenc}
+\usepackage{color}
+
+\studycycle{Informatyka, studia niestacjonarne, mgr II st.}
+\coursesemester{I}
+
+%\coursename{Angelologia teoretyczna i stosowana}
+\coursename{Obliczenia inteligentne}
+\courseyear{2015/2016}
+
+\courseteacher{dr inż. Kamil Stokfiszewski}
+\coursegroup{Niedziela, 13.45}
+
+\author{
+  \studentinfo{Szymon Łyszkowski}{206809}\and
+  \studentinfo{Piotr Kluch}{206799}
+}
+
+\title{Zadnie nr 1. Sieć MADALINE do rozpoznawania liter}
+
+\begin{document}
+\maketitle
+
+\section{Cel}
+{
+Głównym celem zadania było zapoznanie z zasadą działania sieci neuronowej MADALINE (Many ADAptive LINear NEtwork) oraz jej implementacja. Od sieci oczekuje się, że będzie w stanie rozpoznać literę poprzez podanie jej jako wektor zer oraz jedynek.}
+
+\section{Wprowadzenie}
+{Sieć MADALINE jest de facto połączeniem wielu sieci ADALINE (ADAptive LINear NEtwork). ADALINE jest prostą sztuczną siecią neuronową, która składa się z jednego neuronu. ADALINE posiada warstwę wejsciową, ukrytą oraz wyjściową. Warstwa wejsciowa to zbiór danych (wektor), które mają być rozpoznane (zklasyfikowane) przez sieć. Warstwa ukryta to zbiór wag, który jest mnożony ze zbiorem danych wejściowych tak aby otrzymać wartość na wyjściu sieci. MADALINE korzysta z konceptu ADALINE poprzez zwielokrotnienie warstwy ukrytej i produkcji wielu wyjść dla tego samego zbioru wejściowego.
+
+//TUTAJ WZOR NA MNOZENIE WAG I INPUTU ORAZ SCHEMAT NEURONU ORAZ MADALINE. WSPOMNIEC O NORMALIZACJI WEKTORA
+
+W przypdaku sztucznej sieci MADALINE pominięto proces uczenia z racji na znane wartości wag, które umożliwią rozpoznanie danej litery. Wagi te są odzwierciedleniem macierzy binarnej o wymiarach (4x4) dla danej litery, która ma być rozpoznana.
+	
+\color{blue}
+We wprowadzeniu należy zaprezentować całą teorię potrzebną do realizacji
+zadania (przy czym należy tu ograniczyć się wyłącznie do tego, co było
+wykorzystane) tak aby osoba, która nigdy wcześniej nie zetknęła się z tą
+tematyką, potrafiła zrozumieć dalszy opis. Część ta powinna wprowadzać
+wszystkie wykorzystywane wzory, oznaczenia itp., do których należy się
+odwoływać w dalszej części niniejszgo sprawozdania. Zamieszczony tu własny
+opis teorii (a nie skopiowany!) należy poprzeć odwołaniami bibliograficznymi
+do literatury zamieszczonej na końcu. }
+
+\section{Opis implementacji}
+{\color{blue}
+Należy tu zamieścić krótki i zwięzły opis zaprojektowanych klas oraz powiązań
+między nimi. Powinien się tu również znaleźć diagram UML  (diagram klas)
+prezentujący najistotniejsze elementy stworzonej aplikacji. Należy także
+podać, w jakim języku programowania została stworzona aplikacja. }
+
+\section{Materiały i metody}
+{\color{blue}
+W tym miejscu należy opisać, jak przeprowadzone zostały wszystkie badania,
+których wyniki i dyskusja zamieszczane są w dalszych sekcjach. Opis ten
+powinien być na tyle dokładny, aby osoba czytająca go potrafiła wszystkie
+przeprowadzone badania samodzielnie powtórzyć w celu zweryfikowania ich
+poprawności (a zatem m.in. należy zamieścić tu opis architektury sieci,
+wartości współczynników użytych w kolejnych eksperymentach, sposób
+inicjalizacji wag, metodę uczenia itp. oraz informacje o danych, na których
+prowadzone były badania). Przy opisie należy odwoływać się i stosować do
+opisanych w sekcji drugiej wzorów i oznaczeń, a także w jasny sposób opisać
+cel konkretnego testu. Najlepiej byłoby wyraźnie wyszczególnić (ponumerować)
+poszczególne eksperymenty tak, aby łatwo było się do nich odwoływać dalej.}
+
+\section{Wyniki}
+{\color{blue}
+W tej sekcji należy zaprezentować, dla każdego przeprowadzonego eksperymentu,
+kompletny zestaw wyników w postaci tabel, wykresów itp. Powinny być one tak
+ponazywane, aby było wiadomo, do czego się odnoszą. Wszystkie tabele i wykresy
+należy oczywiście opisać (opisać co jest na osiach, w kolumnach itd.) stosując
+się do przyjętych wcześniej oznaczeń. Nie należy tu komentować i interpretować
+wyników, gdyż miejsce na to jest w kolejnej sekcji. Tu również dobrze jest
+wprowadzić oznaczenia (tabel, wykresów) aby móc się do nich odwoływać
+poniżej.}
+
+\section{Dyskusja}
+{\color{blue}
+Sekcja ta powinna zawierać dokładną interpretację uzyskanych wyników
+eksperymentów wraz ze szczegółowymi wnioskami z nich płynącymi. Najcenniejsze
+są, rzecz jasna, wnioski o charakterze uniwersalnym, które mogą być istotne
+przy innych, podobnych zadaniach. Należy również omówić i wyjaśnić wszystkie
+napotakane problemy (jeśli takie były). Każdy wniosek powinien mieć poparcie
+we wcześniej przeprowadzonych eksperymentach (odwołania do konkretnych
+wyników). Jest to jedna z najważniejszych sekcji tego sprawozdania, gdyż
+prezentuje poziom zrozumienia badanego problemu.}
+\section{Wnioski}
+{\color{blue}W tej, przedostatniej, sekcji należy zamieścić podsumowanie
+najważniejszych wniosków z sekcji poprzedniej. Najlepiej jest je po prostu
+wypunktować. Znów, tak jak poprzednio, najistotniejsze są wnioski o
+charakterze uniwersalnym.}
+
+
+\begin{thebibliography}{0}
+\end{thebibliography}
+{\color{blue} 
+Na końcu należy obowiązkowo podać cytowaną w sprawozdaniu
+literaturę, z której grupa korzystała w trakcie prac nad zadaniem (przykład na
+końcu szablonu)}
+\end{document}

@@ -1,8 +1,5 @@
 import random
 
-from neurons import neuron
-
-
 class SimpleOneNeuronNeuralNetwork:
 
     def __init__(self):
