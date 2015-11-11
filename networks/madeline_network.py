@@ -1,7 +1,8 @@
 import random
+
 import numpy
-from Neuron import Neuron
-from training_set_letters import letters
+
+from neurons.neuron import Neuron
 
 
 class MadalineNetwork:
@@ -60,6 +61,7 @@ class MadalineNetwork:
             output_results.append(neuron_output)
         highest_output = max(output_results)
         highest_output_index = output_results.index(highest_output)
+        print 'Neuron outputs: %s' % output_results
         print 'Neuron with highest output was: %s and its index is %s' % (highest_output, highest_output_index)
         return highest_output, highest_output_index
 
@@ -69,12 +71,3 @@ class MadalineNetwork:
         for corresponding_index, training_sample in enumerate(training_set):
             result += training_sample*neuron_weights[corresponding_index]
         return result
-
-
-if __name__ == '__main__':
-    training_set = numpy.array([[1, 1, 1, 1],
-                                [0, 0, 1, 0],
-                                [0, 1, 0, 0],
-                                [1, 1, 1, 1]])
-    letter = letters.Letters()
-    MadalineNetwork(training_set,3, [letter.get_X_four_by_four(), letter.get_Y_four_by_four(), letter.get_Z_four_by_four()]).run_madaline()
