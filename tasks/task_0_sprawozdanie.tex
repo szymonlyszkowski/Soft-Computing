@@ -3,6 +3,7 @@
 \documentclass{classrep}
 \usepackage[utf8x]{inputenc}
 \usepackage{color}
+\usepackage{listings}
 
 \studycycle{Informatyka, studia niestacjonarne, mgr II st.}
 \coursesemester{I}
@@ -33,24 +34,20 @@ Głównym celem zadania było zapoznanie z zasadą działania sieci neuronowej M
 
 //TUTAJ WZOR NA MNOZENIE WAG I INPUTU ORAZ SCHEMAT NEURONU ORAZ MADALINE. WSPOMNIEC O NORMALIZACJI WEKTORA
 
-W przypdaku sztucznej sieci MADALINE pominięto proces uczenia z racji na znane wartości wag, które umożliwią rozpoznanie danej litery. Wagi te są odzwierciedleniem macierzy binarnej o wymiarach (4x4) dla danej litery, która ma być rozpoznana.
-	
-\color{blue}
-We wprowadzeniu należy zaprezentować całą teorię potrzebną do realizacji
-zadania (przy czym należy tu ograniczyć się wyłącznie do tego, co było
-wykorzystane) tak aby osoba, która nigdy wcześniej nie zetknęła się z tą
-tematyką, potrafiła zrozumieć dalszy opis. Część ta powinna wprowadzać
-wszystkie wykorzystywane wzory, oznaczenia itp., do których należy się
-odwoływać w dalszej części niniejszgo sprawozdania. Zamieszczony tu własny
-opis teorii (a nie skopiowany!) należy poprzeć odwołaniami bibliograficznymi
-do literatury zamieszczonej na końcu. }
+W przypdaku sztucznej sieci MADALINE pominięto proces uczenia z racji na znane wartości wag, które umożliwią rozpoznanie danej litery. Wagi te są odzwierciedleniem macierzy binarnej o wymiarach (4x4) dla danej litery, która ma być rozpoznana. Aby porównać wyjście neuronu, wektor wejściowy jak również wektory wag jest normalizowany aby móc prawidłowo porównać wartość na wyjściu, która jest w przedziale <0,1>. Tym sposobem wyjście neuronu, które wykazało największą wartość (podobieństwo do wektora wejściowego) klasyfikuje literę jako rozpoznaną.
+}
 
 \section{Opis implementacji}
-{\color{blue}
-Należy tu zamieścić krótki i zwięzły opis zaprojektowanych klas oraz powiązań
-między nimi. Powinien się tu również znaleźć diagram UML  (diagram klas)
-prezentujący najistotniejsze elementy stworzonej aplikacji. Należy także
-podać, w jakim języku programowania została stworzona aplikacja. }
+{Implementacja została przygotowana w języku Python. Cała sieć jest realizowana przez klasę MadalineNetwork (networks\slash madeline{\_}network.py), która wykorzystując zasadę kompozycji używa klasy Neuron (neurons/neuron.py). W konstruktorze klasy MadalineNetwork podajemy następujące parametry:
+dane wejściowe, liczbę neuronów w sieci oraz dwuwymiarowy wektor wag dla poszczególnych neuronów.
+Rozpoznawanie liter jest realizowane przez metodę \textbf{run{\_}madaline()}. 
+\begin{lstlisting}
+def run_madaline(self):
+	self.__normalize_network_vectors()
+	output_results = self.__compute_network_outputs()
+	return self.__classify_output(output_results)
+\end{lstlisting}
+Metoda ta normalizuje wektory, przekazuje dane wejściowe do wszystkich neuronów sieci, oblicza wartości wyjść neuronów oraz zwraca wartość wyjścia o największej wartości. Najwyższa wartość oznacza największe podobieństwo danych wejściowych sieci do wartości wzorcowej.}
 
 \section{Materiały i metody}
 {\color{blue}

@@ -53,18 +53,27 @@ class MadalineNetwork:
         return neuron_array_weights_normalized
 
     def run_madaline(self):
-        self.__training_set = self.__return_normalized_vector(self.__training_set)
-        self.__madaline_network_neurons = self.normalize_neural_network_neurons_weights(self.__madaline_network_neurons)
+        self.__normalize_network_vectors()
+        output_results = self.__compute_network_outputs()
+        return self.__classify_output(output_results)
+
+    def __compute_network_outputs(self):
         output_results = []
         for neuron in self.__madaline_network_neurons:
             neuron_output = self.__computue_output_value_from_neuron_in_madaline_network(self.__training_set, neuron.weights)
             output_results.append(neuron_output)
+        return output_results
+
+    def __classify_output(self, output_results):
         highest_output = max(output_results)
         highest_output_index = output_results.index(highest_output)
         print 'Neuron outputs: %s' % output_results
         print 'Neuron with highest output was: %s and its index is %s' % (highest_output, highest_output_index)
         return highest_output, highest_output_index
 
+    def __normalize_network_vectors(self):
+        self.__training_set = self.__return_normalized_vector(self.__training_set)
+        self.__madaline_network_neurons = self.normalize_neural_network_neurons_weights(self.__madaline_network_neurons)
 
     def __computue_output_value_from_neuron_in_madaline_network(self, training_set, neuron_weights):
         result = 0
