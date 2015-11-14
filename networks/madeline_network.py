@@ -6,9 +6,9 @@ from neurons.neuron import Neuron
 
 
 class MadalineNetwork:
-    def __init__(self, training_set, neuron_amount_in_network, two_dimensional_array_weights):
+    def __init__(self, training_set, two_dimensional_array_weights):
         self.__training_set = training_set
-        self.__madaline_network_neurons = self.__init_madaline_network_with_neurons(neuron_amount_in_network)
+        self.__madaline_network_neurons = self.__init_madaline_network_with_neurons(len(two_dimensional_array_weights))
         self.__madaline_network_neurons = self.__init_madaline_network_neurons_with_weights(self.__madaline_network_neurons, two_dimensional_array_weights)
 
     @staticmethod
@@ -25,7 +25,9 @@ class MadalineNetwork:
             raise Exception('Amount of neurons: %d is not equal to vectors of weights amount: %d' % (neurons_amount_in_neural_network,
                                                                                                      vectors_of_weights_amount))
         for neuron_index, neuron in enumerate(network_neurons):
-            neuron.initialize_neuron_weights(two_dimensional_weights_array[neuron_index])
+            neuron_recognizing_weights, neuron_letter_name = two_dimensional_weights_array[neuron_index]
+            neuron.initialize_neuron_weights(neuron_recognizing_weights)
+            print 'Neuron of index %d recognizes %s' % (neuron_index, neuron_letter_name)
         return network_neurons
 
     @staticmethod
@@ -33,7 +35,6 @@ class MadalineNetwork:
         network_neurons = []
         for _ in xrange(neuron_amount_in_network):
             network_neurons.append(Neuron())
-        print 'Network neurons created are: %s' % network_neurons
         return network_neurons
 
     def __return_normalized_vector(self, input_vector):
@@ -41,7 +42,7 @@ class MadalineNetwork:
         vector_length = numpy.linalg.norm(flatten_vector)
         normalized_vector = []
         for vector_element in flatten_vector:
-            normalized_vector.append(vector_element/vector_length)
+            normalized_vector.append(vector_element / vector_length)
         return normalized_vector
 
     def normalize_neural_network_neurons_weights(self, networks_neurons):
@@ -78,5 +79,5 @@ class MadalineNetwork:
     def __computue_output_value_from_neuron_in_madaline_network(self, training_set, neuron_weights):
         result = 0
         for corresponding_index, training_sample in enumerate(training_set):
-            result += training_sample*neuron_weights[corresponding_index]
+            result += training_sample * neuron_weights[corresponding_index]
         return result
