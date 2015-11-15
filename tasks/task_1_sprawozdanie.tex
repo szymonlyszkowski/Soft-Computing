@@ -34,7 +34,7 @@ Głównym celem zadania było zapoznanie z zasadą działania sieci neuronowej M
 
 \section{Wprowadzenie}
 {Sieć MADALINE jest de facto połączeniem wielu sieci ADALINE (ADAptive LINear NEtwork). ADALINE jest prostą sztuczną siecią neuronową, która składa się z jednego neuronu. ADALINE posiada warstwę wejsciową, ukrytą oraz wyjściową. Warstwa wejsciowa to zbiór danych (wektor), które mają być rozpoznane (zklasyfikowane) przez sieć. Warstwa ukryta to zbiór wag, który jest mnożony ze zbiorem danych wejściowych tak aby otrzymać wartość na wyjściu sieci. MADALINE korzysta z konceptu ADALINE poprzez zwielokrotnienie warstwy ukrytej i produkcji wielu wyjść dla tego samego zbioru wejściowego.
-W przypdaku sztucznej sieci MADALINE pominięto proces uczenia z racji na znane wartości wag, które umożliwią rozpoznanie danej litery. Wagi te są odzwierciedleniem macierzy binarnej o wymiarach (4x4) dla danej litery, która ma być rozpoznana. Aby porównać wyjście neuronu, wektor wejściowy jak również wektory wag jest normalizowany aby móc prawidłowo porównać wartość na wyjściu, która jest w przedziale <0,1>. Tym sposobem wyjście neuronu, które wykazało największą wartość (podobieństwo do wektora wejściowego) klasyfikuje literę jako rozpoznaną.
+W przypdaku sztucznej sieci MADALINE pominięto proces uczenia z racji na znane wartości wag, które umożliwią rozpoznanie danej litery. Wagi te są odzwierciedleniem macierzy binarnej o wymiarach (4x4) dla danej litery, która ma być rozpoznana. Aby porównać wyjście neuronu, wektor wejściowy jak również wektory wag jest normalizowany aby móc prawidłowo porównać wartość na wyjściu, która jest w przedziale $<0,1>$. Tym sposobem wyjście neuronu, które wykazało największą wartość (podobieństwo do wektora wejściowego) klasyfikuje literę jako rozpoznaną.
 }
 
 \section{Opis implementacji}
@@ -73,7 +73,7 @@ def get_Y_four_by_four(self):
 Implementacja programu obowiązuje rozpoznawanie liter: \textbf{T,V,W,X,Y,Z}. Wzorce tego typu zostały użyte do rozpoznawania liter wejściowych. Każdy wzorzec jest normalizowany i mapowany na wektor jednowymiarowy tak aby można było łatwo obliczyć wartość wyjścia wektora zgodnie ze wzorem:
 \begin{center}$\sum_{i=1}^{n} x_iw_i$\end{center}
 
-Każda próbka wejściowa, jest przetwarzana w ten sam sposób co wagi neuronu, tak aby na wyjściu wektora otrzymany skalar był z przedziału <0,1> 
+Każda próbka wejściowa, jest przetwarzana w ten sam sposób co wagi neuronu, tak aby na wyjściu wektora otrzymany skalar był z przedziału $<0,1>$.
 \section{Wyniki}
 {Poszczególne neurony sieci rozpoznają następujące litery:
 \\Neuron of index 0 recognizes Letter T
