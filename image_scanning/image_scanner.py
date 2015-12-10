@@ -43,9 +43,9 @@ class ImageScanner(object):
         return maximum_allowed_index
 
 
-if __name__ == '__main__':
-    scanner = ImageScanner()
-    image_array = scanner.get_image_as_array('images/lena-512-grayscale.bmp')
-    image_frame = scanner.get_random_frame(image_array, 100)
-    print len(image_frame)
-    numpy.savetxt('images/image_array.txt', image_array, delimiter=',', fmt="%s")
+# if __name__ == '__main__':
+#     scanner = ImageScanner()
+#     image_array = scanner.get_image_as_array('images/lena-512-grayscale.bmp')
+#     image_frame = scanner.get_random_frame(image_array, 100)
+#     print len(image_frame)
+#     numpy.savetxt('images/image_array.txt', image_array, delimiter=',', fmt="%s")
