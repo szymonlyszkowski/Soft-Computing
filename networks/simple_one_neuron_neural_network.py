@@ -1,4 +1,6 @@
 import random
+import neurons.neuron as neuron_module
+
 
 class SimpleOneNeuronNeuralNetwork:
 
@@ -15,7 +17,7 @@ class SimpleOneNeuronNeuralNetwork:
     def run_teaching_period(self, neuron, activation_function, whole_training_set):
         for training_set_index, training_set in enumerate(whole_training_set):
             activation_function_argument = neuron.compute_argument_value_for_activation_function(training_set)
-            if neuron.check_if_activate(activation_function_argument):
+            if neuron_module.check_if_activate(activation_function_argument):
                 activation_function.identity_function(activation_function_argument)
                 neuron.apply_new_weights(self.expected_results[training_set_index], activation_function_argument, training_set)
             else:

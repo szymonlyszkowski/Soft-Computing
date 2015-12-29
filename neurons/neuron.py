@@ -1,5 +1,5 @@
 class Neuron:
-    __TEACHING_FACTOR = 0.005
+    __TEACHING_FACTOR = 0.000005
 
     def __init__(self):
         self.weights = []
@@ -12,7 +12,6 @@ class Neuron:
 
     def __delta_principle_for_identity_function(self, weight, desired_result, obtained_result, used_training_sample_for_iteration):
         result = weight + self.__TEACHING_FACTOR * (desired_result - obtained_result)*used_training_sample_for_iteration
-        print 'result for delta principle %s '% result
         return result
 
     def apply_new_weights(self, desired_result, obtained_result, training_set):
@@ -20,6 +19,13 @@ class Neuron:
             used_training_sample_for_iteration = training_set.__getitem__(corresponding_index)
             new_weight = self.__delta_principle_for_identity_function(weight, desired_result, obtained_result, used_training_sample_for_iteration)
             self.weights.__setitem__(corresponding_index, new_weight)
+
+    def apply_new_weights_in_kohonnen_network(self, training_set):
+        for corresponding_index, weight in enumerate(self.weights):
+            used_training_sample_for_iteration = training_set.__getitem__(corresponding_index)
+            new_weight = self.__delta_principle_for_identity_function(weight, used_training_sample_for_iteration, weight,1)
+            self.weights.__setitem__(corresponding_index, new_weight)
+
 
 
 def check_if_activate(argument):
