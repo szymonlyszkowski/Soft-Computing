@@ -31,9 +31,10 @@ class AbstractNeuralNetwork(object):
     def __return_normalized_vector(self, input_vector):
         flatten_vector = input_vector
         vector_length = numpy.linalg.norm(flatten_vector)
+        vector_length_checked = lambda vector_length: 0.00000000001 if vector_length == 0 else vector_length
         normalized_vector = []
         for vector_element in flatten_vector:
-            normalized_vector.append(vector_element / vector_length)
+            normalized_vector.append(vector_element / vector_length_checked(vector_length))
         return normalized_vector
 
     def normalize_network_vectors(self):

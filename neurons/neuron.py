@@ -1,5 +1,5 @@
 class Neuron:
-    __TEACHING_FACTOR = 0.000005
+    __TEACHING_FACTOR = 0.05
 
     def __init__(self):
         self.weights = []
