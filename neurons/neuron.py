@@ -1,5 +1,5 @@
 class Neuron:
-    __TEACHING_FACTOR = 0.05
+    __TEACHING_FACTOR = 0.005
 
     def __init__(self):
         self.weights = []
@@ -8,10 +8,10 @@ class Neuron:
         self.weights = weights_list
 
     def compute_argument_value_for_activation_function(self, training_set):
-        return sum(training_value*self.weights[corresponding_index] for corresponding_index, training_value in enumerate(training_set))
+        return sum(training_value * self.weights[corresponding_index] for corresponding_index, training_value in enumerate(training_set))
 
     def __delta_principle_for_identity_function(self, weight, desired_result, obtained_result, used_training_sample_for_iteration):
-        result = weight + self.__TEACHING_FACTOR * (desired_result - obtained_result)*used_training_sample_for_iteration
+        result = weight + (self.__TEACHING_FACTOR * (desired_result - obtained_result)*used_training_sample_for_iteration)
         return result
 
     def apply_new_weights(self, desired_result, obtained_result, training_set):

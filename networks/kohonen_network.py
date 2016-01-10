@@ -1,12 +1,12 @@
 import numpy
-from image_scanning.image_scanner import ImageScanner
+from image_utils.image_scanner import ImageScanner
 from networks.abstract_network import AbstractNeuralNetwork
 
 
 class KohonenNetwork(AbstractNeuralNetwork):
     __FRAME_SIZE = 4
     __WEIGHTS_AMOUNT_IN_NEURON = __FRAME_SIZE * __FRAME_SIZE
-    __NEURONS_AMOUNT = 10
+    __NEURONS_AMOUNT = 50
 
     def __init__(self, image_path):
         self.image_scanner = ImageScanner()
@@ -28,10 +28,12 @@ class KohonenNetwork(AbstractNeuralNetwork):
             # maximum_value_on_output = numpy.nanmax(neurons_outputs)
             winner_neuron_index = numpy.nanargmax(neurons_outputs)
             # print "Output value of winning neuron: %s" % maximum_value_on_output
-            # print "Neuron outputs: %s" % neurons_outputs
+            #print "Neuron outputs: %s" % neurons_outputs
             # print "Index of winner Neuron: %d" % winner_neuron_index
             self.neurons_used_indices = self.__mark_neuron_as_used(self.neurons_used_indices, (winner_neuron_index, (numpy.mean(self.training_set))))
-            self.network_neurons[winner_neuron_index].apply_new_weights_in_kohonnen_network(self.training_set)
+            winner_neuron = self.network_neurons[winner_neuron_index]
+            winner_neuron.apply_new_weights_in_kohonnen_network(self.training_set)
+            winner_neuron.weights = self._return_normalized_vector(winner_neuron.weights)
 
     @classmethod
     def __mark_neuron_as_used(cls, neuron_indices_used, neuron_data):
@@ -39,6 +41,15 @@ class KohonenNetwork(AbstractNeuralNetwork):
         if not neuron_data in new_neuron_indices_used:
             new_neuron_indices_used.append(neuron_data)
         return new_neuron_indices_used
+
+    def encode_image(self, image_array):
+        for frame in image_array:
+            self.training_set = frame
+            neurons_outputs = self.compute_network_outputs()
+            winner_neuron_index = numpy.nanargmax(neurons_outputs)
+            print 'Neuron of index %d encoded frame %s' % (winner_neuron_index, frame)
+
+
 
 
 def print_classifying_neurons_weights(indices_of_classifying_neurons, neurons):
@@ -62,10 +73,10 @@ def print_distinct_indices_values(neurons_used_indices):
 
 
 if __name__ == '__main__':
-    network = KohonenNetwork('../image_scanning/images/lena-512-grayscale.bmp')
-    network.train_kohonen_network(100000)
-    #print_classifying_neurons_weights(network.neurons_used_indices, network.network_neurons)
-    #print_all_neurons_weights(network.network_neurons)
+    network = KohonenNetwork('../image_utils/images/lena-512-grayscale.bmp')
+    network.train_kohonen_network(20000)
+    print_classifying_neurons_weights(network.neurons_used_indices, network.network_neurons)
+    print_all_neurons_weights(network.network_neurons)
     indices = print_distinct_indices_values(network.neurons_used_indices)
     print "Indices of neurons used in network %s " % indices
     print "Neurons indices used for classification in Kohonen network frame mean values: %s" % network.neurons_used_indices

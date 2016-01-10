@@ -1,6 +1,6 @@
 import unittest
 import numpy
-from image_scanning.image_scanner import ImageScanner
+from image_utils.image_scanner import ImageScanner
 
 
 class ImageScannerTests(unittest.TestCase):
