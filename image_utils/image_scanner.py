@@ -46,5 +46,4 @@ class ImageScanner(object):
 if __name__ == '__main__':
     scanner = ImageScanner()
     image_array = scanner.get_image_as_array('images/lena-512-grayscale.bmp')
-    print image_array.shape
     numpy.savetxt('images/image_array.txt', image_array, delimiter=',', fmt="%s")
