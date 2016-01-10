@@ -1,7 +1,5 @@
 import random
-
 import numpy
-
 from neurons.neuron import Neuron
 
 

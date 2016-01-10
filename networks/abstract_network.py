@@ -3,6 +3,7 @@ import math
 import numpy
 from neurons.neuron import Neuron
 
+
 class AbstractNeuralNetwork(object):
     def __init__(self, training_set, neurons_amount, weights_amount_in_neuron):
         self.training_set = training_set
@@ -47,7 +48,7 @@ class AbstractNeuralNetwork(object):
     def normalize_network_vectors(self):
         self.training_set = self._return_normalized_vector(self.training_set)
 
-    def __computue_output_value_from_neurons(self, training_set, neuron_weights):
+    def __compute_output_value_from_neurons(self, training_set, neuron_weights):
         result = 0
         for corresponding_index, training_sample in enumerate(training_set):
             result += training_sample * neuron_weights[corresponding_index]
@@ -56,6 +57,6 @@ class AbstractNeuralNetwork(object):
     def compute_network_outputs(self):
         output_results = []
         for neuron in self.network_neurons:
-            neuron_output = self.__computue_output_value_from_neurons(self.training_set, neuron.weights)
+            neuron_output = self.__compute_output_value_from_neurons(self.training_set, neuron.weights)
             output_results.append(neuron_output)
         return output_results
