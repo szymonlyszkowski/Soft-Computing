@@ -4,19 +4,18 @@ from networks.abstract_network import AbstractNeuralNetwork
 
 
 class KohonenNetwork(AbstractNeuralNetwork):
-    _FRAME_SIZE = 4
-    __WEIGHTS_AMOUNT_IN_NEURON = _FRAME_SIZE * _FRAME_SIZE
-    __NEURONS_AMOUNT = 200
-
-    def __init__(self, image_path):
+    def __init__(self, image_path, frame_size, neurons_amount):
+        self.FRAME_SIZE = frame_size
+        self.NEURONS_AMOUNT = neurons_amount
+        self.__WEIGHTS_AMOUNT_IN_NEURON = frame_size * frame_size
         self.image_scanner = ImageScanner()
         self.image_array = self.image_scanner.get_image_as_array(image_path)
         self.neurons_used_indices = []
-        super(KohonenNetwork, self).__init__(self.image_array.flatten(), self.__NEURONS_AMOUNT,
+        super(KohonenNetwork, self).__init__(self.image_array.flatten(), self.NEURONS_AMOUNT,
                                              self.__WEIGHTS_AMOUNT_IN_NEURON)
 
     def __prepare_kohonen_network(self):
-        random_frame = self.image_scanner.get_random_frame(self.image_array, self._FRAME_SIZE)
+        random_frame = self.image_scanner.get_random_frame(self.image_array, self.FRAME_SIZE)
         self.training_set = random_frame
         self.normalize_network_vectors()
 

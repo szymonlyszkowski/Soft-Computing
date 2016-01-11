@@ -41,7 +41,7 @@ class AbstractNeuralNetwork(object):
     def __compute_vector_length(self, vector):
         sum = 0
         for vector_element in vector:
-            sum += math.pow(vector_element, vector_element)
+            sum += math.pow(vector_element, 2)
         result = numpy.sqrt(sum)
         return result
 
