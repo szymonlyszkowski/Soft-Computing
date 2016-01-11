@@ -7,7 +7,7 @@ from image_utils.image_encoder import ImageEncoder
 from networks.kohonen.kohonen_network import KohonenNetwork
 
 if __name__ == '__main__':
-    kohonen_network = KohonenNetwork('../image_utils/images/mandrill.png', 4, 10)
+    kohonen_network = KohonenNetwork('../image_utils/images/mandrill.png', 4, 50)
     kohonen_network.train_kohonen_network(10000)
 
     frame_slicer = ImageFrameSlicer(kohonen_network.image_array, kohonen_network.FRAME_SIZE)
@@ -20,6 +20,6 @@ if __name__ == '__main__':
     decoded_image_array = image_decoder.decode_image(kohonen_network.image_array.shape, kohonen_network.network_neurons, encoded_data_array)
     img = Image.fromarray(decoded_image_array.astype(numpy.uint8), mode='L')
     img.show()
-    image_name = '../image_utils/mandrill_%sx%s_frame_compression_%s_neurons.png' % (kohonen_network.FRAME_SIZE, kohonen_network.FRAME_SIZE,
+    image_name = '../image_utils/mandrill20K_%sx%s_frame_compression_%s_neurons.png' % (kohonen_network.FRAME_SIZE, kohonen_network.FRAME_SIZE,
                                                                                  kohonen_network.NEURONS_AMOUNT)
     img.save(image_name)
