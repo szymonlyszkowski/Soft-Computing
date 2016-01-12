@@ -64,7 +64,67 @@ Następnie struktura jest odkodowywana na obraz wynikowy dzięki ówcześnie wyt
 }
 
 \section{Materiały i metody}
-{Obrazy wzorcowe dla sieci były w formacie 512 x 512 oraz 256 x 256. Liczba epok uczących dla sieci to 10000. Kompresja została wykonana przy stałym \textbf{czynniku uczącym} = 0.005. Obrazy były testowane dla ramek uczących oraz kodujący mających rozmiar (4x4), (8,8), (16,16). Wyniki są następujące:	
+{Obrazy wzorcowe dla sieci były w formacie 512 x 512 oraz 256 x 256. Liczba epok uczących dla sieci to 10000. Kompresja została wykonana przy stałym \textbf{czynniku uczącym} = 0.005. Obrazy były testowane dla ramek uczących oraz kodujący mających rozmiar (4x4), (8,8), (16,16). Wyniki są następujące:
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[scale=5] {boat}
+	\caption{Obraz oryginalny boat.png}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	\begin{minipage}[b]{0.4\textwidth}
+		\includegraphics[scale=0.3]{boat_4x4_frame_compression_20_neurons.png}
+		\caption{Obraz po kompresji używającej ramki (4x4) oraz 20 neuronów.}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{0.4\textwidth}
+		\includegraphics[scale=0.3]{boat_4x4_frame_compression_50_neurons.png}
+		\caption{Obraz po kompresji używającej ramki (4x4) oraz 50 neuronów.}
+	\end{minipage}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[scale=0.5] {lena}
+	\caption{Obraz oryginalny lena.png}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	\begin{minipage}[b]{0.4\textwidth}
+		\includegraphics[scale=0.4]{lena_4x4_frame_compression_20_neurons.png}
+		\caption{Obraz po kompresji używającej ramki (4x4) oraz 20 neuronów.}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{0.4\textwidth}
+		\includegraphics[scale=0.4]{lena_8x8_frame_compression_20_neurons.png}
+		\caption{Obraz po kompresji używającej ramki (8x8) oraz 20 neuronów.}
+	\end{minipage}
+\end{figure}
+
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[scale=0.5] {mandrill}
+	\caption{Obraz oryginalny mandrill.png}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	\begin{minipage}[b]{0.4\textwidth}
+		\includegraphics[scale=0.4]{mandrill_4x4_frame_compression_10_neurons.png}
+		\caption{Obraz po kompresji używającej ramki (4x4) oraz 10 neuronów.}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{0.4\textwidth}
+		\includegraphics[scale=0.4]{mandrill_4x4_frame_compression_20_neurons.png}
+		\caption{Obraz po kompresji używającej ramki (4x4) oraz 20 neuronów.}
+	\end{minipage}
+\end{figure}
+	
+		
 }
 
 \section{Dyskusja}
