@@ -13,7 +13,7 @@ class AbstractNeuralNetwork(object):
     #FOR KOHONEN (0,255)
     def __initialize_network_neurons_with_random_weights(self, weights_amount_in_neuron):
         for neuron in self.network_neurons:
-            neuron.initialize_neuron_weights([random.randint(-0.5, 0.5) for _ in range(0, weights_amount_in_neuron)])
+            neuron.initialize_neuron_weights([random.uniform(-0.5, 0.5) for _ in range(0, weights_amount_in_neuron)])
 
     @classmethod
     def initialize_network_layer_with_random_weights(cls, weights_amount_in_neuron, interval_randint_function, neurons_layer):
