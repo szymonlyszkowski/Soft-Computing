@@ -5,8 +5,9 @@ from neurons.activation_function import ActivationFunction
 
 
 class MultilayerPerceptron(AbstractNeuralNetwork):
-    # output layer 4 neurons 2 weights each
-    # hidden layer 2 neurons 4 weights each
+    __IS_BIAS_ACTIVATED = False
+    __BIAS_INPUT_VALUE = 1
+
     def __init__(self, training_set, neurons_amount_in_hidden_layer, neurons_amount_in_output_layer, weights_amount_in_hidden_layer_neuron,
                  weights_amount_in_output_layer_neuron):
         self.training_set = training_set
@@ -72,8 +73,12 @@ class MultilayerPerceptron(AbstractNeuralNetwork):
         # self.network_neurons stands for hidden layer!!!
         neurons_weighted_sums = []
         neuron_weighted_sum = 0
+        output_values_from_hidden_layer_used = []
+        output_values_from_hidden_layer_used += output_values_from_hidden_layer
+        if self.__IS_BIAS_ACTIVATED:
+            output_values_from_hidden_layer_used.append(self.__BIAS_INPUT_VALUE)
         for neuron in self.output_layer:
-            for corresponding_index, hidden_layer_output in enumerate(output_values_from_hidden_layer):
+            for corresponding_index, hidden_layer_output in enumerate(output_values_from_hidden_layer_used):
                 neuron_weighted_sum += hidden_layer_output * neuron.weights[corresponding_index]
             neurons_weighted_sums.append(neuron_weighted_sum)
             neuron_weighted_sum = 0
@@ -85,11 +90,15 @@ class MultilayerPerceptron(AbstractNeuralNetwork):
             outputs.append(self.__return_vector_from_neuron_after_multiplication_with_training_set(training_set, neuron))
         return outputs
 
-    @staticmethod
-    def __return_vector_from_neuron_after_multiplication_with_training_set(training_set, neuron):
+    @classmethod
+    def __return_vector_from_neuron_after_multiplication_with_training_set(cls, training_set, neuron):
         result_vector = 0
+        training_set_used = []
+        training_set_used += training_set
+        if MultilayerPerceptron.__IS_BIAS_ACTIVATED:
+            training_set_used.append(MultilayerPerceptron.__BIAS_INPUT_VALUE)
         for corresponding_index, neuron_weight in enumerate(neuron.weights):
-            training_sample = training_set[corresponding_index]
+            training_sample = training_set_used[corresponding_index]
             result_vector += training_sample * neuron_weight
         return result_vector
 
@@ -99,9 +108,17 @@ class MultilayerPerceptron(AbstractNeuralNetwork):
             new_weights = self.__compute_new_weights_for_neuron(neuron, error_values[index], training_sample)
             neuron.weights = new_weights
 
-    def __compute_new_weights_for_neuron(self, neuron, error_value, training_sample):
+    @classmethod
+    def __compute_new_weights_for_neuron(cls, neuron, error_value, training_sample):
         new_weights = []
         for weight in neuron.weights:
-            new_weight = (weight + 0.005 * error_value * training_sample)
+            new_weight = (weight + 0.00005 * error_value * training_sample)
             new_weights.append(new_weight)
         return new_weights
+
+    def add_bias(self):
+        MultilayerPerceptron.__IS_BIAS_ACTIVATED = True
+        for neuron in self.output_layer:
+            neuron.weights.append(random.uniform(-0.5, 0.5))
+        for neuron in self.network_neurons:
+            neuron.weights.append(random.uniform(-0.5, 0.5))
