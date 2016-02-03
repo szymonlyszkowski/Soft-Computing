@@ -16,3 +16,4 @@ if __name__ == '__main__':
     hidden_layer_out = perceptron.compute_network_outputs()
     output_layer_out = perceptron.compute_weighted_sums_from_output_layer_neurons(hidden_layer_out)
     print output_layer_out
+    print hidden_layer_out

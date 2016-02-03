@@ -36,14 +36,16 @@ class MultilayerPerceptron(AbstractNeuralNetwork):
 
     def __prepare_data_to_calculate_hidden_layer_errors(self, output_layer_error_signals):
         hidden_layer_outputs = self.compute_network_outputs()
-        output_layer_weighted_sum_of_errors_and_neurons_weights = self.__calculate_weighted_sum_of_output_layer_error_and_its_weights(1,
-                                                                                                                                      output_layer_error_signals)
-        return hidden_layer_outputs, output_layer_weighted_sum_of_errors_and_neurons_weights
+        output_layer_weighted_sums_of_errors_and_neurons_weights = []
+        for hidden_layer_neuron_index, hidden_layer_output in enumerate(hidden_layer_outputs):
+            output_layer_weighted_sums_of_errors_and_neurons_weights.append(self.__calculate_weighted_sum_of_output_layer_error_and_its_weights(
+                hidden_layer_neuron_index, output_layer_error_signals))
+        return hidden_layer_outputs, output_layer_weighted_sums_of_errors_and_neurons_weights
 
-    def __calculate_weighted_sum_of_output_layer_error_and_its_weights(self, weight_index, output_layer_errors):
+    def __calculate_weighted_sum_of_output_layer_error_and_its_weights(self, hidden_layer_neuron_index, output_layer_errors):
         weighted_sum = 0
         for corresponding_index, neuron in enumerate(self.output_layer):
-            weighted_sum += neuron.weights[weight_index] * output_layer_errors[corresponding_index]
+            weighted_sum += neuron.weights[hidden_layer_neuron_index] * output_layer_errors[corresponding_index]
         return weighted_sum
 
     def calculate_error_signals_for_output_layer_neurons(self, expected_vector):
@@ -54,14 +56,16 @@ class MultilayerPerceptron(AbstractNeuralNetwork):
         for corresponding_index, neuron in enumerate(self.output_layer):
             neuron_weighted_sum = weighted_sums_from_output_layer[corresponding_index]
             obtained_output_from_output_layer_neuron = obtained_outputs_from_output_layer_neurons[corresponding_index]
-            error_signal = self.__calculate_error_signal_for_output_layer(expected_vector, obtained_output_from_output_layer_neuron, neuron_weighted_sum)
+            expected_output_from_output_layer_neuron = expected_vector[corresponding_index]
+            error_signal = self.__calculate_error_signal_for_output_layer(expected_output_from_output_layer_neuron, obtained_output_from_output_layer_neuron,
+                                                                          neuron_weighted_sum)
             error_signals.append(error_signal)
         return error_signals
 
-    def __calculate_error_signal_for_output_layer(self, expected_vector, obtained_vector_from_hidden_layer_neuron, neuron_weighted_sum):
+    def __calculate_error_signal_for_output_layer(self, expected_vector_element, obtained_vector_element_from_output_layer_neuron, neuron_weighted_sum):
         derivative = ActivationFunction.sigmoid_function_derivative(neuron_weighted_sum)
-        result_vector = numpy.subtract(expected_vector, obtained_vector_from_hidden_layer_neuron)
-        error_signal_vector = numpy.multiply(result_vector, derivative)
+        result = expected_vector_element - obtained_vector_element_from_output_layer_neuron
+        error_signal_vector = numpy.multiply(result, derivative)
         return error_signal_vector
 
     def compute_weighted_sums_from_output_layer_neurons(self, output_values_from_hidden_layer):
