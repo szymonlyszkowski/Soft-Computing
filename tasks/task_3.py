@@ -7,7 +7,7 @@ if __name__ == '__main__':
 
     #PROPAGATE AND ADJUST WEIGHTS
     hidden_layer_outputs = perceptron.compute_network_outputs()
-    error_signals_output_layer = perceptron.calculate_error_signals_for_output_layer_neurons(patterns[0][1], hidden_layer_outputs)
+    error_signals_output_layer = perceptron.calculate_error_signals_for_output_layer_neurons(patterns[0][1])
     error_signals_hidden_layer = perceptron.calculate_error_signals_for_hidden_layer(error_signals_output_layer)
     perceptron.apply_new_weights_in_layer(perceptron.output_layer, error_signals_output_layer, hidden_layer_outputs)
     perceptron.apply_new_weights_in_layer(perceptron.network_neurons, error_signals_hidden_layer, patterns[0][1])

@@ -16,10 +16,10 @@ class AbstractNeuralNetwork(object):
             neuron.initialize_neuron_weights([random.uniform(-0.5, 0.5) for _ in range(0, weights_amount_in_neuron)])
 
     @classmethod
-    def initialize_network_layer_with_random_weights(cls, weights_amount_in_neuron, interval_randint_function, neurons_layer):
+    def initialize_network_layer_with_random_weights(cls, weights_amount_in_neuron, neurons_layer):
         neurons_layer_with_weights = neurons_layer
         for neuron in neurons_layer_with_weights:
-            neuron.initialize_neuron_weights([interval_randint_function for _ in range(0, weights_amount_in_neuron)])
+            neuron.initialize_neuron_weights([random.uniform(-0.5, 0.5) for _ in range(0, weights_amount_in_neuron)])
         return neurons_layer_with_weights
 
     @staticmethod
