@@ -16,6 +16,13 @@ class MultilayerPerceptron(AbstractNeuralNetwork):
                                                                               self.output_layer)
         super(MultilayerPerceptron, self).__init__(self.training_set, neurons_amount_in_hidden_layer, weights_amount_in_hidden_layer_neuron)
 
+    def compute_network_outputs(self):
+        output_results = []
+        for neuron in self.network_neurons:
+            neuron_output = self._compute_output_value_from_neurons(self.training_set, neuron.weights)
+            output_results.append(ActivationFunction.sigmoid_function(neuron_output))
+        return output_results
+
     def __create_output_layer(self, neurons_amount_in_output_layer):
         output_layer = self._init_network_with_neurons(neurons_amount_in_output_layer)
         return output_layer
@@ -51,9 +58,9 @@ class MultilayerPerceptron(AbstractNeuralNetwork):
 
     def calculate_error_signals_for_output_layer_neurons(self, expected_vector):
         error_signals = []
-        weighted_sums_from_hidden_layer = self.compute_network_outputs()
-        obtained_outputs_from_output_layer_neurons = self.__compute_output_layer_outputs(weighted_sums_from_hidden_layer)
-        weighted_sums_from_output_layer = self.compute_weighted_sums_from_output_layer_neurons(weighted_sums_from_hidden_layer)
+        hidden_layer_output_values = self.compute_network_outputs()
+        obtained_outputs_from_output_layer_neurons = self.__compute_output_layer_outputs(hidden_layer_output_values)
+        weighted_sums_from_output_layer = self.compute_weighted_sums_from_output_layer_neurons(hidden_layer_output_values)
         for corresponding_index, neuron in enumerate(self.output_layer):
             neuron_weighted_sum = weighted_sums_from_output_layer[corresponding_index]
             obtained_output_from_output_layer_neuron = obtained_outputs_from_output_layer_neurons[corresponding_index]
@@ -66,8 +73,8 @@ class MultilayerPerceptron(AbstractNeuralNetwork):
     def __calculate_error_signal_for_output_layer(self, expected_vector_element, obtained_vector_element_from_output_layer_neuron, neuron_weighted_sum):
         derivative = ActivationFunction.sigmoid_function_derivative(neuron_weighted_sum)
         result = expected_vector_element - obtained_vector_element_from_output_layer_neuron
-        error_signal_vector = numpy.multiply(result, derivative)
-        return error_signal_vector
+        error_signal_value = numpy.multiply(result, derivative)
+        return error_signal_value
 
     def compute_weighted_sums_from_output_layer_neurons(self, output_values_from_hidden_layer):
         # self.network_neurons stands for hidden layer!!!
@@ -87,20 +94,10 @@ class MultilayerPerceptron(AbstractNeuralNetwork):
     def __compute_output_layer_outputs(self, training_set):
         outputs = []
         for neuron in self.output_layer:
-            outputs.append(self.__return_vector_from_neuron_after_multiplication_with_training_set(training_set, neuron))
+            activation_function_argument = neuron.compute_argument_value_for_activation_function(training_set)
+            outputs.append(ActivationFunction.sigmoid_function(activation_function_argument))
         return outputs
 
-    @classmethod
-    def __return_vector_from_neuron_after_multiplication_with_training_set(cls, training_set, neuron):
-        result_vector = 0
-        training_set_used = []
-        training_set_used += training_set
-        if MultilayerPerceptron.__IS_BIAS_ACTIVATED:
-            training_set_used.append(MultilayerPerceptron.__BIAS_INPUT_VALUE)
-        for corresponding_index, neuron_weight in enumerate(neuron.weights):
-            training_sample = training_set_used[corresponding_index]
-            result_vector += training_sample * neuron_weight
-        return result_vector
 
     def apply_new_weights_in_layer(self, layer, error_values, training_set):
         for index, neuron in enumerate(layer):

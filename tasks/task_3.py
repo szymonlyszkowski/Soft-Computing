@@ -30,8 +30,8 @@ if __name__ == '__main__':
     train_network(10000, patterns)
 
     # CHECK RESULTS
-    perceptron.training_set = patterns[1][0]
-    print "EXPECTED PATTERN: %s" % patterns[1][1]
+    perceptron.training_set = patterns[0][0]
+    print "EXPECTED PATTERN: %s" % patterns[0][1]
     hidden_layer_out = perceptron.compute_network_outputs()
     output_layer_out = perceptron.compute_weighted_sums_from_output_layer_neurons(hidden_layer_out)
     print "OBTAINED PATTERN: %s" % output_layer_out
