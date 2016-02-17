@@ -5,21 +5,29 @@ from neurons.neuron import Neuron
 
 
 class AbstractNeuralNetwork(object):
+    _KOHONEN_WEIGHT_MIN = 0
+    _KOHONEN_WEIGHT_MAX = 255
+
+    _PERCEPTRON_WEIGHT_MIN = -0.5
+    _PERCEPTRON_WEIGHT_MAX = 0.5
+
     def __init__(self, training_set, neurons_amount, weights_amount_in_neuron):
         self.training_set = training_set
         self.network_neurons = self._init_network_with_neurons(neurons_amount)
         self.__initialize_network_neurons_with_random_weights(weights_amount_in_neuron)
 
-    #FOR KOHONEN (0,255)
+    # FOR KOHONEN (0,255)
     def __initialize_network_neurons_with_random_weights(self, weights_amount_in_neuron):
         for neuron in self.network_neurons:
-            neuron.initialize_neuron_weights([random.uniform(-0.5, 0.5) for _ in range(0, weights_amount_in_neuron)])
+            neuron.initialize_neuron_weights([random.uniform(self._PERCEPTRON_WEIGHT_MIN, self._PERCEPTRON_WEIGHT_MAX) for _ in range(0,
+                                                                                                                                             weights_amount_in_neuron)])
 
     @classmethod
     def initialize_network_layer_with_random_weights(cls, weights_amount_in_neuron, neurons_layer):
         neurons_layer_with_weights = neurons_layer
         for neuron in neurons_layer_with_weights:
-            neuron.initialize_neuron_weights([random.uniform(-0.5, 0.5) for _ in range(0, weights_amount_in_neuron)])
+            neuron.initialize_neuron_weights([random.uniform(cls._PERCEPTRON_WEIGHT_MIN, cls._PERCEPTRON_WEIGHT_MAX) for _ in range(0,
+                                                                                                                                           weights_amount_in_neuron)])
         return neurons_layer_with_weights
 
     @staticmethod
@@ -56,16 +64,15 @@ class AbstractNeuralNetwork(object):
     def normalize_network_vectors(self):
         self.training_set = self._return_normalized_vector(self.training_set)
 
-    def _compute_output_value_from_neurons(self, training_set, neuron_weights):
+    def _compute_output_value_from_neuron(self, training_set, neuron_weights):
         result = 0
         for corresponding_index, training_sample in enumerate(training_set):
             result += training_sample * neuron_weights[corresponding_index]
         return result
 
-
     def compute_network_outputs(self):
         output_results = []
         for neuron in self.network_neurons:
-            neuron_output = self._compute_output_value_from_neurons(self.training_set, neuron.weights)
+            neuron_output = self._compute_output_value_from_neuron(self.training_set, neuron.weights)
             output_results.append(neuron_output)
         return output_results
