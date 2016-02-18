@@ -1,0 +1,99 @@
+% vim:encoding=utf8 ft=tex sts=2 sw=2 et:
+
+\documentclass{classrep}
+\usepackage[utf8x]{inputenc}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{mathtools}
+\lstloadlanguages{Python}
+\lstset{breaklines=true}
+
+\studycycle{Informatyka, studia niestacjonarne, mgr II st.}
+\coursesemester{I}
+
+\coursename{Obliczenia inteligentne}
+\courseyear{2015/2016}
+
+\courseteacher{dr inż. Kamil Stokfiszewski}
+\coursegroup{Niedziela, 13.45}
+
+\author{
+  \studentinfo{Szymon Łyszkowski}{206809}\and
+  \studentinfo{Piotr Kluch}{206799}
+}
+
+\title{Zadnie nr 3. Perceptron wielowarstwowy.}
+
+\begin{document}
+\maketitle
+
+\section{Cel}
+{
+Głównym celem zadania było zapoznanie z zasadą działania perceptronu wielowarstwowego oraz metodą wstecznej propagacji błędu. Od sieci oczekuje się, że
+będzie w stanie rozpoznać wektory: 
+\begin{itemize}
+	\item [1,0,0,0]
+	\item [0,1,0,0]
+	\item [0,0,1,0]
+	\item [0,0,0,1]
+\end{itemize} po wcześniejszym dokonaniu nauki metodą wstecznej propagacji błędów.
+\section{Wprowadzenie}
+{Perceptron wielowarstwowy jest zbudowany z trzech warstw: wejściowej(kopiującej), ukrytej, wyjściowej. Warstwy brzegowe składają się z czterech neuronów a
+warstwa ukryta posiada dwa neurony. Dla każdego neuronu w sieci jest zastosowana sigmoidalna funkcja aktywacji o wzorze: \begin{math}
+                                                                                                                    1\over1+e^{-x}
+                                                                                                                    \end{math}
+                                                                                                       
+                                                                                                       \subsection{Wsteczna propagacja błędu}
+W  wypadku  wstecznej  propagacji  błędów  proces  nauki  polega  na  po-
+czliczeniu błędu każdego z neuronów poczynając od neuronów wyjściowych.
+Wartość błędu w kolejnych warstwach jest zależna od błędów neuronów w
+warstwie po niej następującej. Następnie wartość błędu jest wykorzystywana
+do modyfikacji wag wejść danej warstwy. Ponieważ wagi są wykorzystywane
+w czasie obliczania błędu należy wybrać czy błąd ma być liczony na wagach
+początkowych dla procesu przetwarzania czy może już zmodyfikowanych.
+\subsection{Bias}
+Bias jest to opcjonalne dodanie wejścia do neuronu, które jest zawsze równe 1. Waga dla tego wejścia jest losowana tak samo jak wagi innych neuronów.                                                                                                       
+}
+
+\section{Opis implementacji}
+{Implementacja została przygotowana w języku Python. Cała sieć jest realizowana przez klasę MultilayerPerceptron (networks\slash multilayer{\_}perceptron
+\slash multilayer{\_}perceptron.py),
+która udostępnia funkcjonalności wykorzystuje później w procesie uczenia: obliczanie wyjść poszczególnych warstw, obliczanie błędu danego neuronu, aplikacja nowych wag dla neuronu, zarządzanie biasem. Zadnie trzecie jest realizowane w module task{\_}3.py (katalog tasks\slash):
+\begin{lstlisting}
+if __name__ == '__main__':
+patterns = teaching_patterns_with_desired_outputs()
+perceptron = MultilayerPerceptron(None, 2, 4, 4, 2)
+perceptron.add_bias()
+train_network(100000, patterns, perceptron)
+\end{lstlisting}
+Po inicjalizacji perceptronu dodawany jest bias. Sieć jest najpierw trenowana danymi wzorcami treningowymi. Po każdej zakończonej epoce nauczania dane wejściowe są mieszane tak by nie przekazywać do sieci stałej kolejności wzorca uczącego.Po zakończonym treningu do sieci przekazywane są dane treningowe w poszukiwaniu rezultatów.
+}
+
+\section{Wyniki}
+{Dla sieci, która w swoim procesie uczenia wykorzystuje bias można uzyskać rezultaty, które umożliwią klasyfikację wzorca: \newline
+EP (expected pattern), OP (obtained pattern)\newline
+EP: [0, 0, 0, 1] \newline
+OP: [0.18552957942742349, 0.02840782788608539, 0.027492770991082334, 0.18733893209716337]\newline
+EP: [1, 0, 0, 0]\newline
+OP: [0.18461240887860034, 0.02831808419858233, 0.026795896877811618, 0.18638186699720616]\newline
+EP: [0, 0, 1, 0]\newline
+OP: [0.2864576340892995, 0.0020415773560059627, 0.8786148825401355, 0.30782468133962637]\newline
+EP: [0, 1, 0, 0]\newline
+OP: [0.30750372019569144, 0.9087236663292013, 0.0017103925172125617, 0.28791155017580755] \newline
+
+}
+
+\section{Dyskusja}
+{Jest zauważalne iż dla niektórych wzorców rozpoznawanie jest bardzo dobre np. [0,1,0,0], [0,0,1,0]. Jednakże dla innych klasyfikacja może być utrudniona. Możliwą przyczyną takiego zachowania jest brak warunku stopu dla treningu poszczególnych wzorców. Takie zachowanie może powodować dobre wytrenowanie części przypadków a "przetrenowanie" pozostałej.}
+\section{Wnioski}
+{\begin{itemize}
+		\item Stan początkowy sieci wpływa w pewien sposób na możliwości jej nauki.
+		Zwiększenie  ilości  neuronów  ułatwia  jej  uczenie  się  dzięki  zwiększeniu
+		różnorodności w wagach początkowych.
+		\item W wypadku nieprawidłowego doboru parametrów nauki i momentum pro-
+		ces nauki może uniemożliwić poprawną naukę.
+		\item Obecność biasu, podobnie jak losowanie przypadków testowych jest nie-
+		mal niezbędne do poprawnego działania sieci.
+	\end{itemize}}
+
+\end{document}
