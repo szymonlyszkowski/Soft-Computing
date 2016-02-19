@@ -22,7 +22,7 @@ neuron_decoding). Using such object to as input to neural network it is possible
 
 ##Task 3 Multilayer Perceptron
 
-Objective of this exercise was to implement Perceptron consisting of 3 layers: input(copying), hidden, output. Method used to train network was *backward 
-propagation of error*. Perceptron is supposed to recognize 4 vectors: [1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1].
+Objective of this exercise was to implement Perceptron consisting of 3 layers: input(copying), hidden, output. Method used to train network was **backward 
+propagation of error**. Perceptron is supposed to recognize 4 vectors: [1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1].
 
 
